@@ -1,7 +1,12 @@
 
 import React from "react";
 
-const AppStateContext = React.createContext();
+const defaultValue ={
+    user: {},
+    setUser: () => {}
+}
+
+const AppStateContext = React.createContext(defaultValue);
 
 export const useAppState = () => React.useContext(AppStateContext);
 

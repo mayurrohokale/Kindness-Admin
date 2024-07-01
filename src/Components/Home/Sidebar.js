@@ -23,7 +23,8 @@ import ReceiptIcon from '@mui/icons-material/Receipt';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
 import DraftsIcon from '@mui/icons-material/Drafts';
-
+import { Link } from 'react-router-dom';
+import { useAppState } from '../utils/appState';
 
 
 const drawerWidth = 240;
@@ -104,6 +105,10 @@ const iconMapping = {
 };
 
 export default function MiniDrawer() {
+  
+    const { user } = useAppState();
+    console.log(user);
+
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -113,6 +118,12 @@ export default function MiniDrawer() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const linkMapping = {
+    Users: '/users',
+    Volunteers: '/volunteers',
+    Works: '/works'
   };
 
   return (
@@ -161,6 +172,7 @@ export default function MiniDrawer() {
             >
               Dashboard
             </Box>
+          
           </Typography>
         </Toolbar>
       </AppBar>
@@ -200,11 +212,14 @@ export default function MiniDrawer() {
           {['Users', 'Volunteers', 'Works'].map((text) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
+              component={Link} 
+              to={linkMapping[text]}
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
+              
               >
                 <ListItemIcon
                   sx={{
@@ -221,9 +236,16 @@ export default function MiniDrawer() {
           ))}
         </List>
       </Drawer>
+   
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+    
         <DrawerHeader />
         <Typography paragraph>
+        {user && user.email ? (
+        <span>User Email: {user.email}</span>
+      ) : (
+        <span>No user logged in</span>
+      )}
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
           enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus

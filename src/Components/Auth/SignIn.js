@@ -13,7 +13,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { adminLogin } from '../API/users';
+import { adminLogin, getMe } from '../API/users';
+import { useAppState } from '../utils/appState';
 
 function Copyright(props) {
   return (
@@ -33,6 +34,7 @@ const defaultTheme = createTheme();
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const {user, setUser} = useAppState();
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -44,16 +46,26 @@ export default function SignIn() {
 
     try {
       const response = await adminLogin(email, password);
-      if (response.success) {
+
+      if (response?.token) {
         localStorage.setItem('token', response.token);
         
       }
+      await fetchProfile();
       navigate('/');
       console.log('Login Successful', response);
     } catch (err) {
       setError(err.message);
     }
   };
+
+
+  async function fetchProfile() {
+    const data = await getMe();
+    if (data) {
+      setUser(data?.user);
+    }
+  }
 
   return (
     <ThemeProvider theme={defaultTheme}>

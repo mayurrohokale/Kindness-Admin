@@ -17,6 +17,17 @@ function getHeaders() {
     return data;
 }
 
+export async function getMe() {
+    const headers = getHeaders();
+    console.log(headers);
+    if (!headers?.Authorization) {
+        return null;
+    }
+    const response = await Axios.get(`${BASE_URL}/me`, { headers });
+    return response?.data;
+}
+
+
 export const adminLogin = async (email, password) => {
     try {
         const response = await Axios.post(`${BASE_URL}/admin-login`, { email, password });
@@ -35,3 +46,19 @@ export const getUsers = async () => {
       throw error;
     }
   };
+
+
+  export async function getVolunteers() {
+    try {
+        const response = await Axios.get(`${BASE_URL}/volunteers`);
+        if (response.status === 200) {
+            return response.data;
+        } else {
+            throw new Error("Failed to fetch volunteers");
+        }
+    } catch (error) {
+        console.error("Error fetching volunteers:", error);
+        return null;
+    }
+}
+

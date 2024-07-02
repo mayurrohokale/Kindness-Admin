@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { getVolunteers } from '../API/users';
+import { useAppState } from '../utils/appState';
+import { Navigate } from 'react-router-dom';
+import { DataGrid } from '@mui/x-data-grid';
+import { Link } from 'react-router-dom';
 
 export default function Allvolunteers() {
+    const { user, setUser } = useAppState();
     const [volunteers, setVolunteers] = useState([]);
     const [search, setSearch] = useState('');
     const [error, setError] = useState(null);
@@ -23,12 +28,36 @@ export default function Allvolunteers() {
         fetchVolunteers();
     }, []);
 
+    // if(!user){
+    //     Navigate('/');
+    // }
+
     const filteredVolunteers = volunteers.filter(volunteer =>
-        volunteer.name.toLowerCase().includes(search.toLowerCase()) ||
-        volunteer.email.toLowerCase().includes(search.toLowerCase()) ||
-        volunteer.phone.toLowerCase().includes(search.toLowerCase()) ||
-        volunteer.city.toLowerCase().includes(search.toLowerCase())
+        volunteer.name?.toLowerCase().includes(search.toLowerCase()) ||
+        volunteer.email?.toLowerCase().includes(search.toLowerCase()) ||
+        volunteer.phone?.toLowerCase().includes(search.toLowerCase()) ||
+        volunteer.city?.toLowerCase().includes(search.toLowerCase()) ||
+        volunteer.state?.toLowerCase().includes(search.toLowerCase()) ||
+        volunteer.pincode?.toLowerCase().includes(search.toLowerCase()) 
     );
+
+    const columns = [
+        { field: 'srNo', headerName: 'Sr. No.', width: 90 },
+        { field: 'name', headerName: 'Name', width: 130 },
+        { field: 'email', headerName: 'Email', width: 180 },
+        { field: 'phone', headerName: 'Phone', width: 130 },
+        { field: 'address', headerName: 'Address', width: 130 },
+        { field: 'city', headerName: 'City', width: 130 },
+        { field: 'state', headerName: 'State', width: 130 },
+        { field: 'pincode', headerName: 'Pincode', width: 100 },
+        { field: 'status', headerName: 'Status', width: 100 },
+    ];
+
+    const rows = filteredVolunteers.map((volunteer, index) => ({
+        id: index + 1,
+        srNo: index + 1,
+        ...volunteer,
+    }));
 
     return (
         <div className="p-8">
@@ -40,44 +69,26 @@ export default function Allvolunteers() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
             />
-            <div className="overflow-x-auto">
+            <div style={{ height: 400, width: '100%' }}>
                 {error ? (
                     <div className="text-center py-4">
                         <h2 className="text-xl font-semibold">{error}</h2>
                     </div>
                 ) : (
-                    filteredVolunteers.length > 0 ? (
-                        <table className="min-w-full bg-white">
-                            <thead>
-                                <tr>
-                                    <th className="py-2 px-4 border-b">No</th>
-                                    <th className="py-2 px-4 border-b">Name</th>
-                                    <th className="py-2 px-4 border-b">Email</th>
-                                    <th className="py-2 px-4 border-b">Phone</th>
-                                    <th className="py-2 px-4 border-b">Address</th>
-                                    <th className="py-2 px-4 border-b">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {filteredVolunteers.map((volunteer, index) => (
-                                    <tr key={index} className="text-center">
-                                        <td className="py-2 px-4 border-b">{index + 1}</td>
-                                        <td className="py-2 px-4 border-b">{volunteer.name}</td>
-                                        <td className="py-2 px-4 border-b">{volunteer.email}</td>
-                                        <td className="py-2 px-4 border-b">{volunteer.phone}</td>
-                                        <td className="py-2 px-4 border-b">{volunteer.city}</td>
-                                        <td className="py-2 px-4 border-b">{volunteer.status}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    ) : (
-                        <div className="text-center py-4">
-                            <h2 className="text-xl font-semibold">No volunteers found</h2>
-                        </div>
-                    )
+                    <DataGrid
+                        rows={rows}
+                        columns={columns}
+                        initialState={{
+                            pagination: {
+                                paginationModel: { page: 0, pageSize: 5 },
+                            },
+                        }}
+                        pageSizeOptions={[5, 10]}
+                        checkboxSelection
+                    />
                 )}
             </div>
+            <button><Link to="/">Home</Link></button>
         </div>
     );
 }

@@ -23,6 +23,9 @@ export default function Layout({ children }) {
   }, [])
 
   useEffect( ()=>{
+    if(!user ){
+      navigate('/signin');
+    }
     if(user && location.pathname === '/signin'){
       navigate('/');
     }

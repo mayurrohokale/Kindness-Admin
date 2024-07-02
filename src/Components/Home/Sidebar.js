@@ -25,6 +25,7 @@ import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
 import DraftsIcon from '@mui/icons-material/Drafts';
 import { Link } from 'react-router-dom';
 import { useAppState } from '../utils/appState';
+import PieChart from './charts/Piechart';
 
 
 const drawerWidth = 240;
@@ -106,7 +107,7 @@ const iconMapping = {
 
 export default function MiniDrawer() {
   
-    const { user } = useAppState();
+    const { user, setUser } = useAppState();
     console.log(user);
 
   const theme = useTheme();
@@ -119,6 +120,12 @@ export default function MiniDrawer() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setUser(null);
+  };
+
 
   const linkMapping = {
     Users: '/users',
@@ -171,8 +178,19 @@ export default function MiniDrawer() {
               }}
             >
               Dashboard
+             
             </Box>
-          
+            <div className='flex flex-col justify-end'>
+              {user && user.email ? (
+        <span>User Email: {user.email}</span>
+      ) : (
+        <span>No user logged in</span>
+      )}
+              </div>
+              {user ? (<button onClick={handleLogout} >Logout</button>):(
+        <Link to="/signin">Login</Link>
+      )}
+         
           </Typography>
         </Toolbar>
       </AppBar>
@@ -241,36 +259,11 @@ export default function MiniDrawer() {
     
         <DrawerHeader />
         <Typography paragraph>
-        {user && user.email ? (
-        <span>User Email: {user.email}</span>
-      ) : (
-        <span>No user logged in</span>
-      )}
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
-          enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
-          imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus.
-          Convallis convallis tellus id interdum velit laoreet id donec ultrices.
-          Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-          adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra
-          nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum
-          leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis
-          feugiat vivamus at augue. At augue eget arcu dictum varius duis at
-          consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
-          sapien faucibus et molestie ac.
+       
+      
         </Typography>
         <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
-          eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim
-          neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus sed viverra
-          tellus. Purus sit amet volutpat consequat mauris. Elementum eu facilisis
-          sed odio morbi. Euismod lacinia at quis risus sed vulputate odio. Morbi
-          tincidunt ornare massa eget egestas purus viverra accumsan in. In hendrerit
-          gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
-          et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis
-          tristique sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
+          <PieChart/>
         </Typography>
       </Box>
     </Box>

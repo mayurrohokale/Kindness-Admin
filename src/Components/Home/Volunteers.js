@@ -28,9 +28,9 @@ export default function Allvolunteers() {
         fetchVolunteers();
     }, []);
 
-    // if(!user){
-    //     Navigate('/');
-    // }
+    if(!user){
+        Navigate('/');
+    }
 
     const filteredVolunteers = volunteers.filter(volunteer =>
         volunteer.name?.toLowerCase().includes(search.toLowerCase()) ||
@@ -46,7 +46,7 @@ export default function Allvolunteers() {
         { field: 'name', headerName: 'Name', width: 130 },
         { field: 'email', headerName: 'Email', width: 180 },
         { field: 'phone', headerName: 'Phone', width: 130 },
-        { field: 'address', headerName: 'Address', width: 130 },
+        { field: 'address', headerName: 'Address', width: 200 },
         { field: 'city', headerName: 'City', width: 130 },
         { field: 'state', headerName: 'State', width: 130 },
         { field: 'pincode', headerName: 'Pincode', width: 100 },

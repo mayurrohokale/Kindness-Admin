@@ -97,3 +97,21 @@ export async function getVolunteersCount() {
         return null;
     }
 }
+
+
+// Add the deleteUser function
+export const deleteUser = async (userId) => {
+    try {
+      const headers = getHeaders();
+      const response = await Axios.delete(`${BASE_URL}/delete-user/${userId}`, { headers });
+      
+      if (response.status === 200) {
+        return response.data; // Response from the server
+      } else {
+        throw new Error("Failed to delete user");
+      }
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      throw error; // Re-throw error to handle it in the component or call site
+    }
+  };

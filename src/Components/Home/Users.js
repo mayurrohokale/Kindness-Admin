@@ -6,10 +6,9 @@ import { Link } from "react-router-dom";
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Stack from '@mui/material/Stack';
 
 const columns = (handleDelete) => [
-  { field: "_id", headerName: "ID", width: 150 },
+  { field: "_id", headerName: "ID", width: 70 },
   { field: "name", headerName: "Name", width: 200 },
   { field: "email", headerName: "Email", width: 250 },
   { field: "is_volunteer", headerName: "Volunteer", width: 250 },
@@ -32,7 +31,6 @@ export default function Users() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedRows, setSelectedRows] = useState([]);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -57,24 +55,8 @@ export default function Users() {
       // Refresh the user list after deletion
       const updatedUsers = users.filter(user => user._id !== userId);
       setUsers(updatedUsers);
-      // Clear selection after deletion
-      setSelectedRows([]);
     } catch (error) {
       alert("Failed to delete user: " + error.message);
-    }
-  };
-
-  const handleDeleteSelected = async () => {
-    try {
-      // Delete selected users
-      await Promise.all(selectedRows.map(userId => deleteUser(userId)));
-      // Refresh the user list after deletion
-      const updatedUsers = users.filter(user => !selectedRows.includes(user._id));
-      setUsers(updatedUsers);
-      // Clear selection after deletion
-      setSelectedRows([]);
-    } catch (error) {
-      alert("Failed to delete users: " + error.message);
     }
   };
 
@@ -100,23 +82,8 @@ export default function Users() {
         }}
         pageSizeOptions={[5, 10]}
         checkboxSelection
-        onSelectionModelChange={(newSelection) => {
-          setSelectedRows(newSelection);
-        }}
       />
-      <Stack direction="row" spacing={2} marginTop={2}>
-        <Button
-          variant="contained"
-          color="error"
-          disabled={selectedRows.length === 0}
-          onClick={handleDeleteSelected}
-        >
-          Delete Selected
-        </Button>
-        <Button variant="contained">
-          <Link to="/">Home</Link>
-        </Button>
-      </Stack>
+      <Button variant="contained"><Link to="/">Home</Link></Button>
     </div>
   );
 }

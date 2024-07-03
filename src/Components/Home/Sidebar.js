@@ -26,6 +26,8 @@ import DraftsIcon from '@mui/icons-material/Drafts';
 import { Link } from 'react-router-dom';
 import { useAppState } from '../utils/appState';
 import PieChart from './charts/Piechart';
+import DonationForm from './DonationForm';
+import Dashboard from './Dashboard';
 
 
 const drawerWidth = 240;
@@ -128,6 +130,10 @@ export default function MiniDrawer() {
 
 
   const linkMapping = {
+    Dashboard: '/',
+    Transactions: '/transactions',
+    Blogs: '/bogs',
+    DonationForm: '/donationform',
     Users: '/users',
     Volunteers: '/volunteers',
     Works: '/works'
@@ -205,6 +211,8 @@ export default function MiniDrawer() {
           {['Dashboard', 'Transactions', 'DonationForm', 'Blogs'].map((text) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
+              component={Link} 
+              to={linkMapping[text]}
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',

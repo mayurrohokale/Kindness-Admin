@@ -115,3 +115,18 @@ export const deleteUser = async (userId) => {
       throw error; // Re-throw error to handle it in the component or call site
     }
   };
+
+  export const createDonation = async (donationData) => {
+    try {
+      const headers = getHeaders();
+      const response = await Axios.post(`${BASE_URL}/donation-form`, donationData, { headers });
+      if (response.status === 201) {
+        return response.data;
+      } else {
+        throw new Error('Failed to create donation');
+      }
+    } catch (error) {
+      console.error('Error creating donation:', error);
+      throw error; // Re-throw error to handle it in the component or call site
+    }
+  };

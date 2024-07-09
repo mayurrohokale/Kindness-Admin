@@ -40,20 +40,20 @@ export const adminLogin = async (email, password) => {
 };
 
 export const getUsers = async () => {
-    try {
-      const headers = getHeaders();
-      const response = await Axios.get(`${BASE_URL}/users`, { headers });
-      
-      if (response.status === 200) {
-        return response.data;
-      } else {
-        throw new Error('Failed to fetch users');
-      }
-    } catch (error) {
-      console.error('Error fetching users:', error);
-      return null;
+  try {
+    const headers = getHeaders();
+    const response = await Axios.get(`${BASE_URL}/users`, { headers });
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error("Failed to fetch users");
     }
-  };
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    return null;
+  }
+};
 
 export async function getVolunteers() {
   try {
@@ -83,50 +83,83 @@ export async function getUsersCount() {
   }
 }
 
-
 export async function getVolunteersCount() {
-    try {
-        const response = await Axios.get(`${BASE_URL}/volunteers/count`);
-        if (response.status === 200) {
-            return response.data.count; // Return only the count
-        } else {
-            throw new Error("Failed to fetch volunteers count");
-        }
-    } catch (error) {
-        console.error("Error fetching volunteers count:", error);
-        return null;
+  try {
+    const response = await Axios.get(`${BASE_URL}/volunteers/count`);
+    if (response.status === 200) {
+      return response.data.count; // Return only the count
+    } else {
+      throw new Error("Failed to fetch volunteers count");
     }
+  } catch (error) {
+    console.error("Error fetching volunteers count:", error);
+    return null;
+  }
 }
-
 
 // Add the deleteUser function
 export const deleteUser = async (userId) => {
-    try {
-      const headers = getHeaders();
-      const response = await Axios.delete(`${BASE_URL}/delete-user/${userId}`, { headers });
-      
-      if (response.status === 200) {
-        return response.data; // Response from the server
-      } else {
-        throw new Error("Failed to delete user");
-      }
-    } catch (error) {
-      console.error("Error deleting user:", error);
-      throw error; // Re-throw error to handle it in the component or call site
-    }
-  };
+  try {
+    const headers = getHeaders();
+    const response = await Axios.delete(`${BASE_URL}/delete-user/${userId}`, {
+      headers,
+    });
 
-  export const createDonation = async (donationData) => {
-    try {
-      const headers = getHeaders();
-      const response = await Axios.post(`${BASE_URL}/donation-form`, donationData, { headers });
-      if (response.status === 201) {
-        return response.data;
-      } else {
-        throw new Error('Failed to create donation');
-      }
-    } catch (error) {
-      console.error('Error creating donation:', error);
-      throw error; // Re-throw error to handle it in the component or call site
+    if (response.status === 200) {
+      return response.data; // Response from the server
+    } else {
+      throw new Error("Failed to delete user");
     }
-  };
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    throw error; // Re-throw error to handle it in the component or call site
+  }
+};
+
+export const createDonation = async (donationData) => {
+  try {
+    const headers = getHeaders();
+    const response = await Axios.post(
+      `${BASE_URL}/donation-form`,
+      donationData,
+      { headers }
+    );
+    if (response.status === 201) {
+      return response.data;
+    } else {
+      throw new Error("Failed to create donation");
+    }
+  } catch (error) {
+    console.error("Error creating donation:", error);
+    throw error; // Re-throw error to handle it in the component or call site
+  }
+};
+
+export const getAllBlogs = async () => {
+  try {
+    const headers = getHeaders();
+    const response = await Axios.get(`${BASE_URL}/get-blog`,{headers});
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error("Failed to fetch blog posts");
+    }
+  } catch (error) {
+    console.error("Error fetching blog posts:", error);
+    throw error; // Re-throw error to handle it in the component or call site
+  }
+};
+
+export const approveBlog = async (blogId) => {
+  try {
+    const headers = getHeaders();
+    const response = await Axios.post(`${BASE_URL}/approve-blog/${blogId}`, {}, { headers });
+    return response.data;
+  } catch (error) {
+    console.error("Error approving blog:", error);
+    throw error;
+  }
+};
+
+
+

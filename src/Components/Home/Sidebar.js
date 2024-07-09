@@ -132,7 +132,7 @@ export default function MiniDrawer() {
   const linkMapping = {
     Dashboard: '/',
     Transactions: '/transactions',
-    Blogs: '/bogs',
+    Blogs: '/blog',
     DonationForm: '/donationform',
     Users: '/users',
     Volunteers: '/volunteers',

@@ -7,6 +7,7 @@ import Volunteers from './Components/Home/Volunteers';
 import VoteForm from './Components/Home/VoteForm';
 import Layout from './Components/layout';
 import DonationForm from './Components/Home/DonationForm';
+import Blog from './Components/Home/Blogs';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
             <Route path="/volunteers" element={<Volunteers />}/>
             <Route path="/voteform" element={<VoteForm/>}/>
             <Route path="/donationform" element={<DonationForm/>}/>
+            <Route path="/blog" element={<Blog/>}/>
         </Routes>
         </Layout>
       

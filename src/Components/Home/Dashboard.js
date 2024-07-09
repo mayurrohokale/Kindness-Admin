@@ -1,13 +1,14 @@
 import { useAppState } from '../utils/appState';
-import Sidebar from './Sidebar';
+import PieChart from './charts/Piechart'
 
 export default function Dashboard(){
 
     return(
         <div>
             <div>
-                <Sidebar/>
-            
+                {/* <Sidebar/> */}
+                <PieChart />
+
             </div>
         </div>
     )

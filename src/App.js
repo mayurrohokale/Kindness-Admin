@@ -13,7 +13,7 @@ function App() {
 
   return (
     <div className="App">
-      <Layout>
+   
        <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/signin" element={<SignIn />} />
@@ -23,8 +23,8 @@ function App() {
             <Route path="/donationform" element={<DonationForm/>}/>
             <Route path="/blog" element={<Blog/>}/>
         </Routes>
-        </Layout>
-      
+     
+     
     </div>
   );
 }

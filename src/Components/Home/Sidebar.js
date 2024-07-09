@@ -263,17 +263,7 @@ export default function MiniDrawer() {
         </List>
       </Drawer>
    
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-    
-        <DrawerHeader />
-        <Typography paragraph>
-       
-      
-        </Typography>
-        <Typography paragraph>
-          <PieChart/>
-        </Typography>
-      </Box>
+     
     </Box>
   );
 }

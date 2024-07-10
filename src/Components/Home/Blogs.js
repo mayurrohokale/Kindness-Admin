@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getAllBlogs, approveBlog } from '../API/users';
+import { getAllBlogs, approveBlog, deleteBlog } from '../API/users';
 
 const AdminBlogs = () => {
   const [blogs, setBlogs] = useState([]);
@@ -31,6 +31,16 @@ const AdminBlogs = () => {
     }
   };
 
+  const handleDelete = async (blogId) => {
+    try {
+      await deleteBlog(blogId);
+      setBlogs(blogs.filter(blog => blog._id !== blogId));
+      alert("Blog deleted successfully.");
+    } catch (error) {
+      alert("Error deleting blog. Please try again.");
+    }
+  };
+
   const handleViewDetails = (blog) => {
     setSelectedBlog(blog);
   };
@@ -45,7 +55,7 @@ const AdminBlogs = () => {
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg p-4 md:p-6 bg-white">
-      <h1 className="text-2xl md:text-3xl font-bold mb-4 text-center text-gray-800">Admin Panel - Blogs</h1>
+      <h1 className="text-2xl md:text-3xl font-bold mb-4 text-center text-gray-800">All Blogs</h1>
       <table className="w-full text-sm text-left text-gray-500 bg-gray-50 rounded-lg overflow-hidden">
         <thead className="text-xs text-gray-700 uppercase bg-gray-200">
           <tr>
@@ -62,7 +72,7 @@ const AdminBlogs = () => {
             <tr key={blog._id} className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} border-b`}>
               <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{blog.title}</td>
               <td className="px-4 py-3 truncate" title={blog.description}>
-                {blog.description.length > 100 ? `${blog.description.substring(0, 100)}...` : blog.description}
+                {blog.description.length > 100 ? `${blog.description.substring(0, 50)}...` : blog.description}
               </td>
               <td className="px-4 py-3">{blog.author}</td>
               <td className="px-4 py-3">{new Date(blog.date).toLocaleDateString()}</td>
@@ -80,7 +90,13 @@ const AdminBlogs = () => {
                   className="bg-gray-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-gray-600 transition duration-300"
                   onClick={() => handleViewDetails(blog)}
                 >
-                  View All
+                  Read More!
+                </button>
+                <button
+                  className="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-red-600 transition duration-300"
+                  onClick={() => handleDelete(blog._id)}
+                >
+                  Delete
                 </button>
               </td>
             </tr>

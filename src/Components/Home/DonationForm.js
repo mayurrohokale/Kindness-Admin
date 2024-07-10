@@ -59,6 +59,9 @@ export default function DonationForm() {
     marginBottom: '1em',
     padding: '0.5em',
     fontSize: '1em',
+    border: '1px solid #ccc',
+    borderRadius: '8px',
+  
   };
 
   const buttonStyle = {

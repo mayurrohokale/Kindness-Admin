@@ -97,7 +97,7 @@ export async function getVolunteersCount() {
   }
 }
 
-// Add the deleteUser function
+// delete User 
 export const deleteUser = async (userId) => {
   try {
     const headers = getHeaders();
@@ -160,6 +160,18 @@ export const approveBlog = async (blogId) => {
     throw error;
   }
 };
+
+export const deleteBlog = async (blogId) =>{
+  try {
+    const headers = getHeaders();
+    const response = await Axios.delete(`${BASE_URL}/delete-blog/${blogId}`, { headers });
+    return response.data;
+    } catch (error) {
+      console.error("Error deleting blog:", error);
+      throw error;
+      }
+}
+
 
 
 

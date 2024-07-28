@@ -13,6 +13,7 @@ export default function DonationForm() {
   const [eventToDate, setEventToDate] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [image, setImage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,6 +25,7 @@ export default function DonationForm() {
       contact,
       eventFromDate,
       eventToDate,
+      image,
     };
 
     try {
@@ -38,6 +40,7 @@ export default function DonationForm() {
       setContact('');
       setEventFromDate('');
       setEventToDate('');
+      setImage('');
     } catch (error) {
       console.error('Error creating donation:', error);
       setErrorMessage('Failed to create donation. Please try again.');
@@ -134,6 +137,15 @@ export default function DonationForm() {
           style={inputStyle}
           value={contact}
           onChange={(e) => setContact(e.target.value)}
+        />
+        <input
+          type="text"
+          name="image"
+          placeholder="Image URL"
+          required
+          style={inputStyle}
+          value={image}
+          onChange={(e) => setImage(e.target.value)}
         />
         <button type="submit" style={buttonStyle}>Submit</button>
       </form>

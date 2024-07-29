@@ -172,6 +172,17 @@ export const deleteBlog = async (blogId) =>{
       }
 }
 
+export const donationForm = async (formId) => {
+  try {
+    const headers = getHeaders();
+    const response = await Axios.get(`${BASE_URL}/donation-form`, { headers });
+    return response.data;
+    } catch (error) {
+      console.error("Error fetching donation form:", error);
+      throw error;
+      }
+}
+
 
 
 

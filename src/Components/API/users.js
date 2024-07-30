@@ -172,17 +172,16 @@ export const deleteBlog = async (blogId) =>{
       }
 }
 
-export const donationForm = async (formId) => {
+export const updateUserStatus = async (userId, status) => {
   try {
     const headers = getHeaders();
-    const response = await Axios.get(`${BASE_URL}/donation-form`, { headers });
+    const response = await Axios.put(`${BASE_URL}/update-user-status/${userId}`, { status }, { headers });
     return response.data;
-    } catch (error) {
-      console.error("Error fetching donation form:", error);
-      throw error;
-      }
-}
-
+  } catch (error) {
+    console.error("Error updating user status:", error);
+    throw error;
+  }
+};
 
 
 

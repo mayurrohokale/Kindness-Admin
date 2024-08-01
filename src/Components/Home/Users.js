@@ -1,4 +1,4 @@
-import { getUsers, deleteUser, updateUserStatus } from "../API/users"; // Updated import
+import { getUsers, deleteUser, updateUserStatus } from "../API/users";
 import { useState, useEffect } from "react";
 import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
@@ -8,13 +8,34 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ToggleOnIcon from '@mui/icons-material/ToggleOn';
 import ToggleOffIcon from '@mui/icons-material/ToggleOff';
+import { green, red } from '@mui/material/colors';
 
 const columns = (handleDelete, handleToggleUserStatus) => [
   { field: "_id", headerName: "ID", width: 70 },
   { field: "name", headerName: "Name", width: 200 },
   { field: "email", headerName: "Email", width: 250 },
   { field: "is_volunteer", headerName: "Volunteer", width: 150 },
-  { field: "status", headerName: "Status", width: 150 },
+  {
+    field: "status",
+    headerName: "Status",
+    width: 150,
+    renderCell: (params) => (
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        color: params.value === 'true' ? green[500] : red[500],
+      }}>
+        <div style={{
+          width: 12,
+          height: 12,
+          borderRadius: '50%',
+          backgroundColor: params.value === 'true' ? green[500] : red[500],
+          marginRight: 8,
+        }} />
+        {params.value === 'true' ? 'Active' : 'Deactivated'}
+      </div>
+    ),
+  },
   {
     field: "actions",
     headerName: "Actions",
@@ -46,6 +67,7 @@ export default function Users() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
+        
         const usersData = await getUsers();
         if (usersData) {
           setUsers(usersData);
@@ -61,15 +83,19 @@ export default function Users() {
   }, []);
 
   const handleDelete = async (userId) => {
-    try {
-      await deleteUser(userId);
-      // Refresh the user list after deletion
-      const updatedUsers = users.filter(user => user._id !== userId);
-      setUsers(updatedUsers);
-    } catch (error) {
-      alert("Failed to delete user: " + error.message);
+    const confirmDelete = window.confirm("Are you sure you want to delete this user?");
+    
+    if (confirmDelete) {
+      try {
+        await deleteUser(userId);
+        const updatedUsers = users.filter(user => user._id !== userId);
+        setUsers(updatedUsers);
+      } catch (error) {
+        alert("Failed to delete user: " + error.message);
+      }
     }
   };
+  
 
   const handleToggleUserStatus = async (userId, currentStatus) => {
     try {
@@ -77,7 +103,6 @@ export default function Users() {
       const result = await updateUserStatus(userId, newStatus);
       if (result) {
         alert(`User ${newStatus === 'true' ? 'enabled' : 'disabled'} successfully`);
-        // Update the UI or state here
         const updatedUsers = users.map(user => 
           user._id === userId ? { ...user, status: newStatus } : user
         );
@@ -97,7 +122,7 @@ export default function Users() {
   }
 
   return (
-    <div style={{ height: 400, width: "100%" }}>
+    <div style={{ height: 500, width: "100%" }}>
       <h2>Users List</h2>
       <DataGrid
         rows={users}

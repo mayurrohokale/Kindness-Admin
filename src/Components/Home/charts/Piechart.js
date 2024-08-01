@@ -39,7 +39,7 @@ const PieChart = () => {
   return (
     <div>
       
-      <div style={{ width: '300px', height: '300px', justifyContent: 'center' }}>
+      <div style={{ width: '200px', height: '200px', justifyContent: 'center' }}>
       <h2>Users and Volunteers Count</h2>
         <Pie data={data}  />
       </div>

@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { getMe } from "./API/users";
 import AppStateContext from "./utils/appState";
 import Sidebar from "./Home/Sidebar";
+import Header from "./Home/Header";
 export default function Layout({ children }) {
 
   const [user, setUser] = useState(null);
@@ -42,8 +43,9 @@ export default function Layout({ children }) {
   return (
     <div className=" justify-center">
       <AppStateContext.Provider value={value}>
-        <Sidebar />
-        <div className="ml-32  pt-12 md:pt-20">{children}</div>
+        {/* <Sidebar /> */}
+        <Header />
+        <div className="  pt-12 md:pt-20">{children}</div>
       </AppStateContext.Provider>
     </div>
   );

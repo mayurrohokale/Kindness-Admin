@@ -43,8 +43,8 @@ export default function Layout({ children }) {
   return (
     <div className=" justify-center">
       <AppStateContext.Provider value={value}>
-        {/* <Sidebar /> */}
-        <Header />
+        <Sidebar />
+        {/* <Header /> */}
         <div className="  pt-12 md:pt-20">{children}</div>
       </AppStateContext.Provider>
     </div>

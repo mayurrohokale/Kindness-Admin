@@ -45,7 +45,7 @@ export default function Layout({ children }) {
       <AppStateContext.Provider value={value}>
         {/* <Sidebar /> */}
         <Header />
-        <div className="  pt-12 md:pt-20">{children}</div>
+        <div className="pt-2 pl-0 md:pl-64 md:pt-6">{children}</div>
       </AppStateContext.Provider>
     </div>
   );

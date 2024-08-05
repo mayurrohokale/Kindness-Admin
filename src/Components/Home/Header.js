@@ -1,133 +1,133 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useAppState } from '../utils/appState';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { styled, useTheme } from '@mui/material/styles';
-import Drawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import React, { useState } from 'react';
+import { useTheme, Box, CssBaseline, AppBar, Toolbar, IconButton, Drawer, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
+import { Menu as MenuIcon, Dashboard as DashboardIcon, Info as InfoIcon } from '@mui/icons-material';
+import { Link, Outlet } from 'react-router-dom';
+import { IoReceipt } from "react-icons/io5";
+import { FaDonate } from "react-icons/fa";
+import { ImBlog } from "react-icons/im";
+import { FaUsers } from "react-icons/fa";
+import { MdVolunteerActivism } from "react-icons/md";
 
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
-  padding: theme.spacing(0, 1),
-  ...theme.mixins.toolbar,
-}));
+const drawerWidth = 240;
 
-const Header = () => {
-  const { user, setUser } = useAppState();
+const MainLayout = () => {
   const theme = useTheme();
-  const isLargeScreen = useMediaQuery('(min-width: 1024px)');
-  const [open, setOpen] = React.useState(isLargeScreen);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  React.useEffect(() => {
-    setOpen(isLargeScreen);
-  }, [isLargeScreen]);
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
   };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setUser(null);
-  };
-
-  return (
-    <header>
-      <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
-        <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-          <Link to="/" className="flex items-center">
-            <img
-              src="./images/logo4.png"
-              className="mr-3 w-6 sm:w-9"
-              alt="Flowbite Logo"
-            />
-          </Link>
-          <div className="flex items-center lg:order-2">
-            {user ? (
-              <>
-                <span className="text-gray-800 dark:text-white mr-4">{user.email}</span>
-                <button
-                  onClick={handleLogout}
-                  className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
-                >
-                  Logout
-                </button>
-              </>
-            ) : (
-              <>
-                <Link
-                  to="/signin"
-                  className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
-                >
-                  Log in
-                </Link>
-                <Link
-                  to="/get-started"
-                  className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
-                >
-                  Get started
-                </Link>
-              </>
-            )}
-            {!isLargeScreen && (
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={handleDrawerOpen}
-                edge="start"
+  const drawer = (
+    <div>
+      <Divider />
+      <List>
+        {[
+          { text: 'Dashboard', icon: <DashboardIcon />, to: '/' },
+          { text: 'Transactions', icon: <IoReceipt />, to: '/transactions' },
+          { text: 'Donationform', icon: <FaDonate />, to: '/donationform' },
+          { text: 'blogs', icon: <ImBlog />, to: '/blog' },
+          { text: 'Users', icon: <FaUsers />, to: '/users' },
+          { text: 'Volunteers', icon: <MdVolunteerActivism />, to: '/volunteers' },
+        ].map((item) => (
+          <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton
+              component={Link}
+              to={item.to}
+              sx={{
+                minHeight: 48,
+                justifyContent: 'initial',
+                px: 2.5,
+                '&.active': {
+                  backgroundColor: theme.palette.action.selected,
+                  color: theme.palette.primary.main,
+                },
+              }}
+              onClick={() => setMobileOpen(false)}
+            >
+              <ListItemIcon
                 sx={{
-                  marginRight: 2,
-                  ...(open && { display: 'none' }),
+                  minWidth: 0,
+                  mr: 3,
+                  justifyContent: 'center',
                 }}
               >
-                <MenuIcon />
-              </IconButton>
-            )}
-          </div>
-        </div>
-      </nav>
-      <Drawer
-        sx={{
-          width: 240,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: 240,
-            boxSizing: 'border-box',
-          },
-        }}
-        variant={isLargeScreen ? 'permanent' : 'temporary'}
-        anchor="left"
-        open={open}
-        onClose={handleDrawerClose}
-      >
-        <DrawerHeader>
-          {!isLargeScreen && (
-            <IconButton onClick={handleDrawerClose}>
-              <ChevronLeftIcon />
-            </IconButton>
-          )}
-        </DrawerHeader>
-        <List>
-          {['Home', 'Company', 'Marketplace', 'Features', 'Team', 'Contact'].map((text) => (
-            <ListItem button key={text} component={Link} to={`/${text.toLowerCase()}`}>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
-    </header>
+                {item.icon}
+              </ListItemIcon>
+              <ListItemText primary={item.text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </div>
+  );
+
+  return (
+    <Box sx={{ display: 'flex', flexDirection: 'column', }}>
+      <CssBaseline />
+      <AppBar position="fixed">
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { md: 'none' } }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>
+            Kindness Corner Admin
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Box sx={{ display: 'flex', flex: 1 }}>
+        <Box
+          component="nav"
+          sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
+        >
+          <Drawer
+            variant="temporary"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true,
+            }}
+            sx={{
+              display: { xs: 'block', md: 'none' },
+              '& .MuiDrawer-paper': { 
+                boxSizing: 'border-box', 
+                width: drawerWidth 
+              },
+            }}
+          >
+            {drawer}
+          </Drawer>
+          <Drawer
+            variant="permanent"
+            sx={{
+              display: { xs: 'none', md: 'block' },
+              '& .MuiDrawer-paper': { 
+                boxSizing: 'border-box', 
+                width: drawerWidth,
+                mt: '11vh', 
+              },
+            }}
+            open
+          >
+            {drawer}
+          </Drawer>
+        </Box>
+        <Box
+          component="main"
+          sx={{ flexGrow: 1, p: 1, width: { md: `calc(100% - ${drawerWidth}px)` } }}
+        >
+          <Toolbar /> 
+          <Outlet />
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
-export default Header;
+export default MainLayout;

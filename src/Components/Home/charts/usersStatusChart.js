@@ -19,7 +19,7 @@ export default function UsersStatus(){
         //   }
           
           if (disable !== null){
-            setdisableUsers(disable);
+            setdisableUsers(disable?.disableUsers);
           }
         };
     

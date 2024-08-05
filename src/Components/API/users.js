@@ -2,7 +2,7 @@ import Axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_API_KEY || "http://localhost:8000";
 
-function getAuthToken() {
+export function getAuthToken() {
   return localStorage.getItem("token");
 }
 

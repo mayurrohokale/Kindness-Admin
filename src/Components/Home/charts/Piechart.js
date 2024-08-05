@@ -30,7 +30,7 @@ const PieChart = () => {
       {
         label: '# of People',
         data: [usersCount, volunteersCount],
-        backgroundColor: ['#36A2EB', '#FF6384'],
+        backgroundColor: ['#128AED', '#F70059'],
         hoverBackgroundColor: ['#36A2EB', '#FF6384'],
       },
     ],
@@ -39,8 +39,8 @@ const PieChart = () => {
   return (
     <div>
       
-      <div style={{ width: '200px', height: '200px', justifyContent: 'center' }}>
-      <h2>Users and Volunteers Count</h2>
+      <div style={{ width: '400px', height: '400px', justifyContent: 'center' }}>
+      <h2 className=' font-bold text-xl'>Users and Volunteers Count</h2>
         <Pie data={data}  />
       </div>
     </div>

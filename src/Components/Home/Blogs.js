@@ -69,7 +69,7 @@ const AdminBlogs = () => {
         </thead>
         <tbody>
           {blogs.map((blog, index) => (
-            <tr key={blog._id} className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} border-b`}>
+            <tr key={blog._id} className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} border-red`}>
               <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{blog.title}</td>
               <td className="px-4 py-3 truncate" title={blog.description}>
                 {blog.description.length > 100 ? `${blog.description.substring(0, 50)}...` : blog.description}

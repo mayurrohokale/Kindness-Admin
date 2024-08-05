@@ -8,6 +8,7 @@ import VoteForm from './Components/Home/VoteForm';
 import Layout from './Components/layout';
 import DonationForm from './Components/Home/DonationForm';
 import Blog from './Components/Home/Blogs';
+import UsersStatus from './Components/Home/charts/usersStatusChart';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
             <Route path="/voteform" element={<VoteForm/>}/>
             <Route path="/donationform" element={<DonationForm/>}/>
             <Route path="/blog" element={<Blog/>}/>
+            <Route path="/users-status-count" element={<UsersStatus/>}/>
         </Routes>
      
      

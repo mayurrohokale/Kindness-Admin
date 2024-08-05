@@ -1,21 +1,47 @@
-import React, { useState } from 'react';
-import { useTheme, Box, CssBaseline, AppBar, Toolbar, IconButton, Drawer, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
-import { Menu as MenuIcon, Dashboard as DashboardIcon, Info as InfoIcon } from '@mui/icons-material';
-import { Link, Outlet } from 'react-router-dom';
+import React, { useState } from "react";
+import {
+  useTheme,
+  Box,
+  CssBaseline,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Drawer,
+  Divider,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+} from "@mui/material";
+import {
+  Menu as MenuIcon,
+  Dashboard as DashboardIcon,
+  Info as InfoIcon,
+} from "@mui/icons-material";
+import { Link, Outlet } from "react-router-dom";
 import { IoReceipt } from "react-icons/io5";
 import { FaDonate } from "react-icons/fa";
 import { ImBlog } from "react-icons/im";
 import { FaUsers } from "react-icons/fa";
 import { MdVolunteerActivism } from "react-icons/md";
+import { useAppState } from "../utils/appState";
 
 const drawerWidth = 240;
 
 const MainLayout = () => {
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { user, setUser } = useAppState();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setUser(null);
   };
 
   const drawer = (
@@ -23,22 +49,26 @@ const MainLayout = () => {
       <Divider />
       <List>
         {[
-          { text: 'Dashboard', icon: <DashboardIcon />, to: '/' },
-          { text: 'Transactions', icon: <IoReceipt />, to: '/transactions' },
-          { text: 'Donationform', icon: <FaDonate />, to: '/donationform' },
-          { text: 'blogs', icon: <ImBlog />, to: '/blog' },
-          { text: 'Users', icon: <FaUsers />, to: '/users' },
-          { text: 'Volunteers', icon: <MdVolunteerActivism />, to: '/volunteers' },
+          { text: "Dashboard", icon: <DashboardIcon />, to: "/" },
+          { text: "Transactions", icon: <IoReceipt />, to: "/transactions" },
+          { text: "Donationform", icon: <FaDonate />, to: "/donationform" },
+          { text: "blogs", icon: <ImBlog />, to: "/blog" },
+          { text: "Users", icon: <FaUsers />, to: "/users" },
+          {
+            text: "Volunteers",
+            icon: <MdVolunteerActivism />,
+            to: "/volunteers",
+          },
         ].map((item) => (
-          <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
+          <ListItem key={item.text} disablePadding sx={{ display: "block" }}>
             <ListItemButton
               component={Link}
               to={item.to}
               sx={{
                 minHeight: 48,
-                justifyContent: 'initial',
+                justifyContent: "initial",
                 px: 2.5,
-                '&.active': {
+                "&.active": {
                   backgroundColor: theme.palette.action.selected,
                   color: theme.palette.primary.main,
                 },
@@ -49,7 +79,7 @@ const MainLayout = () => {
                 sx={{
                   minWidth: 0,
                   mr: 3,
-                  justifyContent: 'center',
+                  justifyContent: "center",
                 }}
               >
                 {item.icon}
@@ -63,7 +93,7 @@ const MainLayout = () => {
   );
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', }}>
+    <Box sx={{ display: "flex", flexDirection: "column" }}>
       <CssBaseline />
       <AppBar position="fixed">
         <Toolbar>
@@ -72,16 +102,29 @@ const MainLayout = () => {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { md: 'none' } }}
+            sx={{ mr: 2, display: { md: "none" } }}
           >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>
             Kindness Corner Admin
           </Typography>
+          <div className="flex-col justify-end hidden md:flex ">
+            {user && user.email ? (
+              <div>
+                <span className="font-semibold font-sans">Admin: {user.email}</span>
+                <button onClick={handleLogout} className="border-white w-16 bg-white text-black p-1 rounded-md font-bold ml-2">Logout</button>
+              </div>
+              
+              
+            ) : (
+              <button className="border-white w-16 bg-white text-black p-1 rounded-md font-bold ml-2"><Link to="/signin">Login</Link></button>
+            )}
+          </div>
+         
         </Toolbar>
       </AppBar>
-      <Box sx={{ display: 'flex', flex: 1 }}>
+      <Box sx={{ display: "flex", flex: 1 }}>
         <Box
           component="nav"
           sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
@@ -94,10 +137,10 @@ const MainLayout = () => {
               keepMounted: true,
             }}
             sx={{
-              display: { xs: 'block', md: 'none' },
-              '& .MuiDrawer-paper': { 
-                boxSizing: 'border-box', 
-                width: drawerWidth 
+              display: { xs: "block", md: "none" },
+              "& .MuiDrawer-paper": {
+                boxSizing: "border-box",
+                width: drawerWidth,
               },
             }}
           >
@@ -106,11 +149,11 @@ const MainLayout = () => {
           <Drawer
             variant="permanent"
             sx={{
-              display: { xs: 'none', md: 'block' },
-              '& .MuiDrawer-paper': { 
-                boxSizing: 'border-box', 
+              display: { xs: "none", md: "block" },
+              "& .MuiDrawer-paper": {
+                boxSizing: "border-box",
                 width: drawerWidth,
-                mt: '11vh', 
+                mt: "11vh",
               },
             }}
             open
@@ -120,9 +163,13 @@ const MainLayout = () => {
         </Box>
         <Box
           component="main"
-          sx={{ flexGrow: 1, p: 1, width: { md: `calc(100% - ${drawerWidth}px)` } }}
+          sx={{
+            flexGrow: 1,
+            p: 1,
+            width: { md: `calc(100% - ${drawerWidth}px)` },
+          }}
         >
-          <Toolbar /> 
+          <Toolbar />
           <Outlet />
         </Box>
       </Box>

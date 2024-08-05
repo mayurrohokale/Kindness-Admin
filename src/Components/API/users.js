@@ -183,5 +183,32 @@ export const updateUserStatus = async (userId, status) => {
   }
 };
 
+export const activeUserscount = async () => {
+  try{
+    const response = await Axios.get(`${BASE_URL}/active-users-count`);
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error("Failed to fetch active-users count");
+    }
+  } catch (error){
+    console.error("Error in Fetching Active Users Count", error);
+    throw error;
+  }
+}
+
+export async function disableUsersCount() {
+  try{
+    const response = await Axios.get(`${BASE_URL}/disable-users-count`);
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error("Failed to fetch disable-users count");
+    }
+  } catch(error){
+    console.error("Error in Fetching Disable Users Count", error);
+    return null;
+  }
+}
 
 

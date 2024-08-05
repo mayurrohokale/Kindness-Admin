@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Pie } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import ApexCharts from 'react-apexcharts';
 import { getUsersCount, getVolunteersCount } from '../../API/users';
 
-ChartJS.register(ArcElement, Tooltip, Legend);
 const PieChart = () => {
   const [usersCount, setUsersCount] = useState(0);
   const [volunteersCount, setVolunteersCount] = useState(0);
@@ -24,24 +22,31 @@ const PieChart = () => {
     fetchData();
   }, []);
 
-  const data = {
+  const options = {
     labels: ['Users', 'Volunteers'],
-    datasets: [
-      {
-        label: '# of People',
-        data: [usersCount, volunteersCount],
-        backgroundColor: ['#128AED', '#F70059'],
-        hoverBackgroundColor: ['#36A2EB', '#FF6384'],
-      },
-    ],
+    colors: ['#128AED', '#F70059'],
+    legend: {
+      position: 'bottom'
+    },
+    dataLabels: {
+      enabled: true
+    },
+    plotOptions: {
+      pie: {
+        donut: {
+          size: '50%'
+        }
+      }
+    }
   };
+
+  const series = [usersCount, volunteersCount];
 
   return (
     <div>
-      
-      <div style={{ width: '400px', height: '400px', justifyContent: 'center' }}>
-      <h2 className=' font-bold text-xl'>Users and Volunteers Count</h2>
-        <Pie data={data}  />
+      <div style={{ width: '300px', height: '300px', justifyContent: 'center' }}>
+        <h2 className="font-bold text-xl">Users and Volunteers Count</h2>
+        <ApexCharts options={options} series={series} type="pie" width="300" height="300" />
       </div>
     </div>
   );

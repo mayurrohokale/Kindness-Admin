@@ -54,7 +54,7 @@ const AdminBlogs = () => {
   }
 
   return (
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg p-4 justify-center md:p-6 bg-white">
+    <div className="relative overflow-x-auto shadow-md sm:rounded-lg p-4 justify-center md:p-6 bg-white ">
       <h1 className="text-2xl md:text-3xl font-bold mb-4 text-center text-gray-800">All Blogs</h1>
       <table className="w-full text-sm text-left text-gray-500 bg-gray-50 rounded-lg overflow-hidden">
         <thead className="text-xs text-gray-700 uppercase bg-gray-200">

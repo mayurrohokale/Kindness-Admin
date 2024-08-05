@@ -6,7 +6,7 @@ export default function Dashboard(){
 
     return(
         <div>
-            <div className='flex flex-col-2'>
+            <div className='flex flex-col gap-10 justify-center md:flex-row'>
                 <div><PieChart /></div>
                 <div> <UsersStatus/></div>
             </div>

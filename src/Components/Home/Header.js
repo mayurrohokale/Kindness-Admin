@@ -77,7 +77,8 @@ const MainLayout = () => {
             >
               <ListItemIcon
                 sx={{
-                  minWidth: 0,
+                  minWidth: 0
+                  ,
                   mr: 3,
                   justifyContent: "center",
                 }}

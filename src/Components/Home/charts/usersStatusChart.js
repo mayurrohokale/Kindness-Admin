@@ -1,35 +1,43 @@
 import React, { useEffect, useState } from 'react';
+import ApexCharts from 'react-apexcharts';
 import { getUsersCount, disableUsersCount, activeUserscount } from '../../API/users';
-import { Line } from 'react-chartjs-2';
-import 'chart.js/auto';
 
 export default function UsersStatus() {
     const [activeUsers, setActiveUsers] = useState(0);
     const [usersCount, setTotalUsers] = useState(0);
     const [disableUsers, setDisableUsers] = useState(0);
-    const [chartData, setChartData] = useState({
-        labels: [],
-        datasets: [
-            {
-                label: 'Total Users',
-                data: [],
-                borderColor: 'rgba(75, 192, 192, 1)',
-                fill: false,
-            },
-            {
-                label: 'Active Users',
-                data: [],
-                borderColor: 'rgba(54, 162, 235, 1)',
-                fill: false,
-            },
-            {
-                label: 'Disabled Users',
-                data: [],
-                borderColor: 'rgba(255, 99, 132, 1)',
-                fill: false,
-            },
-        ],
+    const [chartOptions, setChartOptions] = useState({
+        chart: {
+            type: 'bar',
+        },
+        xaxis: {
+            categories: [],
+        },
+        colors: ['#F70059', '#128AED', '#D2042D'],
+        plotOptions: {
+            bar: {
+                horizontal: false,
+            }
+        },
+        legend: {
+            position: 'bottom'
+        }
     });
+
+    const [series, setSeries] = useState([
+        {
+            name: 'Total Users',
+            data: [],
+        },
+        {
+            name: 'Active Users',
+            data: [],
+        },
+        {
+            name: 'Disabled Users',
+            data: [],
+        },
+    ]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -39,37 +47,34 @@ export default function UsersStatus() {
 
             if (users !== null) {
                 setTotalUsers(users);
-                setChartData(prevData => ({
-                    ...prevData,
-                    labels: [...prevData.labels, new Date().toLocaleTimeString()],
-                    datasets: prevData.datasets.map(dataset => 
-                        dataset.label === 'Total Users' ? 
-                        { ...dataset, data: [...dataset.data, users] } : 
-                        dataset
-                    )
+                setChartOptions(prevOptions => ({
+                    ...prevOptions,
+                    xaxis: {
+                        ...prevOptions.xaxis,
+                        categories: [...prevOptions.xaxis.categories, new Date().toLocaleTimeString()],
+                    }
                 }));
+                setSeries(prevSeries => prevSeries.map(seriesItem => 
+                    seriesItem.name === 'Total Users' ? 
+                    { ...seriesItem, data: [...seriesItem.data, users] } : 
+                    seriesItem
+                ));
             }
             if (active !== null) {
                 setActiveUsers(active?.activeUsers);
-                setChartData(prevData => ({
-                    ...prevData,
-                    datasets: prevData.datasets.map(dataset => 
-                        dataset.label === 'Active Users' ? 
-                        { ...dataset, data: [...dataset.data, active?.activeUsers] } : 
-                        dataset
-                    )
-                }));
+                setSeries(prevSeries => prevSeries.map(seriesItem => 
+                    seriesItem.name === 'Active Users' ? 
+                    { ...seriesItem, data: [...seriesItem.data, active?.activeUsers] } : 
+                    seriesItem
+                ));
             }
             if (disable !== null) {
                 setDisableUsers(disable?.disableUsers);
-                setChartData(prevData => ({
-                    ...prevData,
-                    datasets: prevData.datasets.map(dataset => 
-                        dataset.label === 'Disabled Users' ? 
-                        { ...dataset, data: [...dataset.data, disable?.disableUsers] } : 
-                        dataset
-                    )
-                }));
+                setSeries(prevSeries => prevSeries.map(seriesItem => 
+                    seriesItem.name === 'Disabled Users' ? 
+                    { ...seriesItem, data: [...seriesItem.data, disable?.disableUsers] } : 
+                    seriesItem
+                ));
             }
         };
 
@@ -78,10 +83,10 @@ export default function UsersStatus() {
 
     return (
         <div>
-            <h1>Disabled Users Count: {disableUsers}</h1>
+            {/* <h1>Disabled Users Count: {disableUsers}</h1>
             <h1>Active Users Count: {activeUsers}</h1>
-            <h1>Total Users Count: {usersCount}</h1>
-            <Line data={chartData} />
+            <h1>Total Users Count: {usersCount}</h1> */}
+            <ApexCharts options={chartOptions} series={series} type="bar" height={350} />
         </div>
     );
 }

@@ -1,3 +1,44 @@
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/9ae08b03-5314-4e79-91b1-0edac556698d" alt="logo3" width="200"/>
+  <h2>Kindness Admin</h2>
+  <hr/>
+  <h3>Kindness Admin is Management System for All transactions,
+Users, Volunteers and Blogs</h3>
+</div>
+
+## Objectives
+- It is integrated with the Kindness Corner website.
+- The admin can delete users or deactivate users from logging in.
+- All blogs can be approved or rejected by the Kindness Admin.
+- Real-Time data shows of Active Users, blogs and Transactions
+
+## Screenshots:
+<h2>Login Page:</h2>
+<h4>User need to Login to Acess the Website</h4>
+<img src="https://github.com/user-attachments/assets/e0ebd1a4-3dcf-4167-845a-35edd6c63c42"/>
+
+<h2>Dashboard Page</h2>
+<h4>in Dashboard all the Analysis will shown (volunteers count users count, Active users, deactive users count, etc.)</h4>
+<img src="https://github.com/user-attachments/assets/a8824000-ef07-41f3-a2b7-239b962d7b26" />
+
+<h2>NGO Form's</h2>
+<h4>From this page, the admin is directly sent NGO Form listed to the Kindness Corner.
+</h4>
+<img src="https://github.com/user-attachments/assets/2c54d983-2d74-4014-9829-3cb745613597" />
+
+<h2>Blogs Page</h2>
+<h4>From this Page Admin can approve or Delete the blog</h4>
+<img src="https://github.com/user-attachments/assets/724205e2-0afd-4782-bbf3-f52a96e1559a" />
+
+<h2>Users Details Page: </h2>
+<h4>From this Admin can Deactive users also Admin has authority to delete Users information from DB</h4>
+<img src="https://github.com/user-attachments/assets/e7e754e7-9c07-46e2-9849-278caebdcbde" />
+
+<h2>Volunteers Page: </h2>
+<h4>Admin can see volunteers information here also admin has authority to remove the volunteer status of User</h4>
+<img src="https://github.com/user-attachments/assets/b89bf5ac-7327-4fbe-af8e-707902e4f3c1" />
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

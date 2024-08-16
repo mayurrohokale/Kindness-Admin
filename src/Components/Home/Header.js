@@ -27,6 +27,7 @@ import { ImBlog } from "react-icons/im";
 import { FaUsers } from "react-icons/fa";
 import { MdVolunteerActivism } from "react-icons/md";
 import { useAppState } from "../utils/appState";
+import Button from "../Button/reu_Button";
 
 const drawerWidth = 240;
 
@@ -114,7 +115,7 @@ const MainLayout = () => {
             {user && user.email ? (
               <div>
                 <span className="font-semibold font-sans">Admin: {user.email}</span>
-                <button onClick={handleLogout} className="border-white w-16 bg-white text-black p-1 rounded-md font-bold ml-2">Logout</button>
+                <Button onClick={handleLogout} label="Logout"/>
               </div>
               
               

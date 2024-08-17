@@ -114,13 +114,13 @@ const MainLayout = () => {
           <div className="flex-col justify-end hidden md:flex ">
             {user && user.email ? (
               <div>
-                <span className="font-semibold font-sans">Admin: {user.email}</span>
+                <span className="font-semibold font-sans px-2">Admin: {user.email}</span>
                 <Button onClick={handleLogout} label="Logout"/>
               </div>
               
               
             ) : (
-              <button className="border-white w-16 bg-white text-black p-1 rounded-md font-bold ml-2"><Link to="/signin">Login</Link></button>
+              <Button label="Login" to="/signin" />
             )}
           </div>
          

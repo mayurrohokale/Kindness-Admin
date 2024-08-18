@@ -3,12 +3,14 @@ import { useState, useEffect } from "react";
 import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ToggleOnIcon from '@mui/icons-material/ToggleOn';
 import ToggleOffIcon from '@mui/icons-material/ToggleOff';
 import { green, red } from '@mui/material/colors';
+import Button from "../Button/reu_Button";
+
 
 const columns = (handleDelete, handleToggleUserStatus) => [
   { field: "_id", headerName: "ID", width: 70 },
@@ -136,7 +138,8 @@ export default function Users() {
         pageSizeOptions={[5, 10]}
         checkboxSelection
       />
-      <Button variant="contained"><Link to="/">Home</Link></Button>
+      {/* <Button variant="contained"><Link to="/">Home</Link></Button> */}
+      <Button label="Home" to="/" />
     </div>
   );
 }

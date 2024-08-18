@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getAllBlogs, approveBlog, deleteBlog } from '../API/users';
+import Button from "../Button/reu_Button";
 
 const AdminBlogs = () => {
   const [blogs, setBlogs] = useState([]);
@@ -121,6 +122,7 @@ const AdminBlogs = () => {
           </div>
         </div>
       )}
+      <Button label="Home" to="/" />
     </div>
   );
 };
